@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>
+<html class="ie8" lang="en"> <![endif]-->
+<!--[if IE 9]>
+<html class="ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html lang="en">
+<!--<![endif]-->
+  <head>
+      <meta charset="utf-8">
+      <title>Luca</title>
+      <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+      <link id="style" href="css/clean.css" rel="stylesheet" media="screen">
+      <link rel="stylesheet" type="text/css" href="css/clean.css">
+      <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+      <style>
+          body {
+          font-family: helvetica, sans-serif;
+          }
+          .source {
+          font-family: monospace;
+          padding: 10px;
+          }
+      </style>
+  </head>
+  <body>
+    <h1 style="margin-top:150px;">Luca Version Tracker</h1>
+    <div id="table"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/jquery.columns-1.0.min.js"></script>
+    <script>
+    			$.ajax({
+    				url:'http://localhost:5000/v1/projects',
+    				type: 'GET',
+    				dataType: 'json',
+    				contentType: "application/json",
+            success: function(json) {
+              table = $('#table').columns({
+                data:json,
+                schema: [
+                  {"header":"Project Name", "key":"project_name"},
+                  {"header":"Environment", "key":"project_env"},
+                  {"header":"Build Branch", "key":"branch"},
+                  {"header":"Version", "key":"version"},
+                  {"header":"Commit Hash", "key":"git_hash"},
+                  {"header":"Commit User", "key":"user"}
+                ]
+              });
+            },
+    		    error: function(data, statusText, resObject) { console.log( "failed, status is " + statusText + ", responseObj:" + JSON.stringify(data)); }
+    			})
+    </script>
+  </body>
+</html>
